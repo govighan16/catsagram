@@ -22,6 +22,7 @@ const pageContent = async () => {
     img.setAttribute('id', 'cat-pic')
     section.appendChild(img)
 
+    createButtonsContainer()
     createReplaceCatButton()
     createUpVoteButton()
 };
@@ -35,6 +36,15 @@ async function getCatImage () {
     } catch(error) {
         console.log('Failure to retrieve cat image', e.message)
     }
+}
+
+const createButtonsContainer = function() {
+    const buttonsSpan = document.createElement('span')
+    //buttonsSpan.setAttribute('class', 'container')
+    buttonsSpan.setAttribute('id', 'buttons-span')
+
+    const section = document.body.querySelector('.container')
+    section.appendChild(buttonsSpan)
 }
 
 const createReplaceCatButton = function() {
