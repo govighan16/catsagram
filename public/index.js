@@ -29,6 +29,9 @@ const pageContent = async () => {
     createReplaceCatButton()
     createUpVoteButton()
     createDownVoteButton()
+    createCommentContainer();
+    addCommentButton()
+    createCommentSection()
 
     
 };
@@ -90,6 +93,8 @@ const replaceCatHandler = async function(event) {
     img.setAttribute('data-upvotes', 0)
     const scoreDiv = document.body.querySelector('#score-div')
     scoreDiv.innerText = `Popularity Score: ${parseInt(img.dataset.upvotes)}`
+    const commentList = document.body.querySelector('#commentList')
+    commentList.innerHTML = ''
 }
 
 const createUpVoteButton = function() {
@@ -140,4 +145,67 @@ const downVoteHandler = function(event) {
     //console.log(currentImg.dataset.upvotes)
     const scoreDiv = document.body.querySelector('#score-div')
     scoreDiv.innerText = `Popularity Score: ${parseInt(currentImg.dataset.upvotes)}`
+}
+
+const createCommentContainer = function() {
+    const commentSpan = document.createElement('span')
+    commentSpan.setAttribute('id', 'comment-span')
+
+    const section = document.body.querySelector('.container')
+    section.appendChild(commentSpan)
+}
+
+const createCommentSection = function() {
+    const commentSection = document.createElement('section')
+    commentSection.setAttribute('id', 'comment-section')
+
+    const subHeading = document.createElement('h3')
+    subHeading.setAttribute('id', 'subHeading')
+    subHeading.innerText = 'Comment Section:'
+    commentSection.appendChild(subHeading)
+    const commentList = document.createElement('ul')
+    commentList.setAttribute('id', 'commentList')
+    commentList.style = "list-style: none;"
+    commentSection.appendChild(commentList)
+
+    const section = document.body.querySelector('.container')
+    section.appendChild(commentSection)
+}
+
+const addCommentButton = function() {
+    const commentInput = document.createElement('input')
+    commentInput.setAttribute('id', 'commentInput')
+    commentInput.classList.add('comment-element');
+    commentInput.setAttribute('placeholder', 'Add a comment...')
+
+    const commentLabel = document.createElement('label')
+    commentLabel.setAttribute('id', 'commentLabel')
+    commentLabel.classList.add('comment-element');
+    commentLabel.innerText = 'Comment:'
+
+    const commentBtn = document.createElement('button')
+    commentBtn.setAttribute('id', 'commentButton')
+    commentLabel.classList.add('comment-element')
+    commentBtn.innerText = 'Submit'
+
+    const commentSpan = document.body.querySelector('#comment-span')
+    commentSpan.appendChild(commentLabel)
+    commentSpan.appendChild(commentInput)
+    commentSpan.appendChild(commentBtn)
+
+    commentBtn.addEventListener('click', commentHandler)
+
+}
+
+const commentHandler = function(event) {
+    const val = document.body.querySelector('#commentInput').value
+    const li = document.createElement('li')
+    li.innerText = val;
+    if (val.length == 0) {
+        alert('Empty comment, please type something')
+    } else {
+    const commentList = document.body.querySelector('#commentList')
+    commentList.appendChild(li)
+    }
+
 }
