@@ -163,10 +163,12 @@ const createCommentSection = function() {
     subHeading.setAttribute('id', 'subHeading')
     subHeading.innerText = 'Comment Section:'
     commentSection.appendChild(subHeading)
+
     const commentList = document.createElement('ul')
     commentList.setAttribute('id', 'commentList')
     commentList.style = "list-style: none;"
     commentSection.appendChild(commentList)
+    
 
     const section = document.body.querySelector('.container')
     section.appendChild(commentSection)
@@ -188,12 +190,49 @@ const addCommentButton = function() {
     commentLabel.classList.add('comment-element')
     commentBtn.innerText = 'Submit'
 
+    const deleteSpecificBtn = document.createElement('button')
+    deleteSpecificBtn.setAttribute('id', 'deleteSButton')
+    deleteSpecificBtn.classList.add('comment-element')
+    deleteSpecificBtn.innerText = 'Search and Delete'
+
+    const searchInput = document.createElement('input')
+    searchInput.setAttribute('id', 'searchInput')
+    searchInput.classList.add('comment-element')
+    searchInput.setAttribute('placeholder', 'Search for comment')
+
     const commentSpan = document.body.querySelector('#comment-span')
     commentSpan.appendChild(commentLabel)
     commentSpan.appendChild(commentInput)
     commentSpan.appendChild(commentBtn)
 
+    commentSpan.appendChild(searchInput)
+    commentSpan.appendChild(deleteSpecificBtn)
+    
+
     commentBtn.addEventListener('click', commentHandler)
+    deleteSpecificBtn.addEventListener('click', deleteSCommentHandler)
+
+}
+
+const deleteSCommentHandler = function(event) {
+    const commentList = document.getElementById('commentList');
+    const searchInput = document.getElementById('searchInput');
+
+    const searchText = searchInput.value.toLowerCase();
+    if (searchText.length == 0) {
+        alert('Please enter search string to delete by')
+    } else {
+
+    const liElements = commentList.querySelectorAll('li');
+    liElements.forEach(li => {
+        const commentText = li.textContent.toLowerCase();
+        const commentWords = commentText.split(' ')
+        if (commentWords.includes(searchText)) {
+            li.remove();
+        }
+    });
+}
+
 
 }
 
@@ -201,6 +240,7 @@ const commentHandler = function(event) {
     const val = document.body.querySelector('#commentInput').value
     const li = document.createElement('li')
     li.innerText = val;
+
     if (val.length == 0) {
         alert('Empty comment, please type something')
     } else {
