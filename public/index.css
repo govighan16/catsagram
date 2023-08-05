@@ -35,3 +35,21 @@
 #score-div {
     margin-bottom: 15px;
 }
+
+#comment-span {
+    margin-top: 15px;
+    margin-left: 40px
+}
+
+.comment-element {
+    margin-right: 10px;
+}
+
+
+#comment-section {
+    width: 1200px; /* Set the desired width */
+    height: 500px; /* Set the desired height */
+    overflow: auto; /* Add scrollbar if content overflows */
+    border: 1px solid black; /* Add a border for clarity */
+    margin-top: 40px;
+}
