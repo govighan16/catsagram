@@ -23,6 +23,7 @@ const pageContent = async () => {
     section.appendChild(img)
 
     createReplaceCatButton()
+    createUpVoteButton()
 };
 
 async function getCatImage () {
@@ -57,4 +58,25 @@ const replaceCatHandler = async function(event) {
     img.setAttribute('src', newUrl)
     //Reset current image up/downvotes
     img.setAttribute('data-upvotes', 0)
+}
+
+const createUpVoteButton = function() {
+    const upVoteBtn = document.createElement('button')
+    upVoteBtn.setAttribute('class', 'button')
+    upVoteBtn.setAttribute('id', 'upvote')
+    upVoteBtn.innerText = 'UPVOTE'
+
+    const section = document.body.querySelector('.container')
+    section.appendChild(upVoteBtn)
+    const buttonContainer = document.body.querySelector('#buttons-span')
+    buttonContainer.appendChild(upVoteBtn)
+
+    upVoteBtn.addEventListener('click', upVoteHandler)
+
+}
+
+const upVoteHandler = function(event) {
+    const currentImg = document.body.querySelector('#cat-pic')
+    currentImg.setAttribute('data-upvotes', parseInt(currentImg.dataset.upvotes) + 1)
+    console.log(currentImg.dataset.upvotes)
 }
