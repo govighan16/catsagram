@@ -21,6 +21,8 @@ const pageContent = async () => {
     img.setAttribute('src', url)
     img.setAttribute('id', 'cat-pic')
     section.appendChild(img)
+
+    createReplaceCatButton()
 };
 
 async function getCatImage () {
@@ -32,4 +34,27 @@ async function getCatImage () {
     } catch(error) {
         console.log('Failure to retrieve cat image', e.message)
     }
+}
+
+const createReplaceCatButton = function() {
+    const replaceCatBtn = document.createElement('button')
+    replaceCatBtn.setAttribute('class', 'button')
+    replaceCatBtn.setAttribute('id', 'add-cat')
+    replaceCatBtn.innerText = 'REPLACE CAT'
+
+    const section = document.body.querySelector('.container')
+    section.appendChild(replaceCatBtn)
+    const buttonContainer = document.body.querySelector('#buttons-span')
+    buttonContainer.appendChild(replaceCatBtn)
+    
+    replaceCatBtn.addEventListener('click', replaceCatHandler)
+}
+
+const replaceCatHandler = async function(event) {
+    const img = document.querySelector('#cat-pic')
+    const newUrl = await getCatImage()
+    //event.target.setAttribute('src', newUrl)
+    img.setAttribute('src', newUrl)
+    //Reset current image up/downvotes
+    img.setAttribute('data-upvotes', 0)
 }
