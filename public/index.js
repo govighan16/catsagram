@@ -4,7 +4,6 @@ window.addEventListener('DOMContentLoaded', event => {
 
 window.onload = () => {
     pageContent();
-    //createReplaceCatButton();
 }
 
 const pageContent = async () => {
@@ -16,12 +15,18 @@ const pageContent = async () => {
     h1.setAttribute('class', 'heading')
     h1.innerText = 'Catstagram'
     section.appendChild(h1)
-
     const img = document.createElement('img')
+    img.setAttribute('id', 'cat-pic')
+
+    if (!localStorage.getItem('imgUrl')) {
     const url = await getCatImage()
     img.setAttribute('src', url)
-    img.setAttribute('id', 'cat-pic')
-    img.setAttribute('data-upvotes', 0)
+    localStorage.setItem('imgUrl', url)
+    localStorage.setItem('upvotes', 0)
+    //REPLACE img.setAttribute('data-upvotes', 0)
+    } else {
+        img.setAttribute('src', localStorage.getItem('imgUrl'))
+    }
     section.appendChild(img)
 
     createScoreContainer();
@@ -49,7 +54,6 @@ async function getCatImage () {
 
 const createButtonsContainer = function() {
     const buttonsSpan = document.createElement('span')
-    //buttonsSpan.setAttribute('class', 'container')
     buttonsSpan.setAttribute('id', 'buttons-span')
 
     const section = document.body.querySelector('.container')
@@ -60,7 +64,7 @@ const createScoreContainer = function() {
     const scoreDiv = document.createElement('div')
     scoreDiv.setAttribute('id', 'score-div')
     const p = document.createElement('p')
-    p.textContent = 'Popularity Score: 0'
+    p.textContent = `Popularity Score: ${localStorage.getItem('upvotes')}`
     scoreDiv.textContent = p.textContent
 
     const section = document.body.querySelector('.container')
@@ -88,11 +92,13 @@ const createReplaceCatButton = function() {
 const replaceCatHandler = async function(event) {
     const img = document.querySelector('#cat-pic')
     const newUrl = await getCatImage()
-    img.setAttribute('src', newUrl)
+    localStorage.setItem('imgUrl', newUrl)
+    img.setAttribute('src', localStorage.getItem('imgUrl'))
+    localStorage.setItem('upvotes', 0)
     //Reset current image up/downvotes
-    img.setAttribute('data-upvotes', 0)
+    //REPlACE img.setAttribute('data-upvotes', 0)
     const scoreDiv = document.body.querySelector('#score-div')
-    scoreDiv.innerText = `Popularity Score: ${parseInt(img.dataset.upvotes)}`
+    scoreDiv.innerText = `Popularity Score: ${parseInt(localStorage.getItem('upvotes'))}`
     const commentList = document.body.querySelector('#commentList')
     commentList.innerHTML = ''
 }
@@ -116,10 +122,10 @@ const createUpVoteButton = function() {
 
 const upVoteHandler = function(event) {
     const currentImg = document.body.querySelector('#cat-pic')
-    currentImg.setAttribute('data-upvotes', parseInt(currentImg.dataset.upvotes) + 1)
-    //console.log(currentImg.dataset.upvotes)
+    //REPLACE currentImg.setAttribute('data-upvotes', parseInt(currentImg.dataset.upvotes) + 1)
+    localStorage.setItem('upvotes', parseInt(localStorage.getItem('upvotes')) + 1)
     const scoreDiv = document.body.querySelector('#score-div')
-    scoreDiv.innerText = `Popularity Score: ${parseInt(currentImg.dataset.upvotes)}`
+    scoreDiv.innerText = `Popularity Score: ${parseInt(localStorage.getItem('upvotes'))}`
 }
 
 const createDownVoteButton = function() {
@@ -141,10 +147,10 @@ const createDownVoteButton = function() {
 
 const downVoteHandler = function(event) {
     const currentImg = document.body.querySelector('#cat-pic')
-    currentImg.setAttribute('data-upvotes', parseInt(currentImg.dataset.upvotes) - 1)
-    //console.log(currentImg.dataset.upvotes)
+    //REPLACE currentImg.setAttribute('data-upvotes', parseInt(currentImg.dataset.upvotes) - 1)
+    localStorage.setItem('upvotes', parseInt(localStorage.getItem('upvotes')) - 1)
     const scoreDiv = document.body.querySelector('#score-div')
-    scoreDiv.innerText = `Popularity Score: ${parseInt(currentImg.dataset.upvotes)}`
+    scoreDiv.innerText = `Popularity Score: ${parseInt(localStorage.getItem('upvotes'))}`
 }
 
 const createCommentContainer = function() {
